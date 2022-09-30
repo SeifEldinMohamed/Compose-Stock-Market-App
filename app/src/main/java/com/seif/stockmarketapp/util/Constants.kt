@@ -1,8 +1,10 @@
 package com.seif.stockmarketapp.util
 
+import com.seif.stockmarketapp.BuildConfig
+
 class Constants {
     companion object {
-        const val API_KEY = "HVZHQPIF48Z5Z2L8"
-        const val BASE_URL = "https://www.alphavantage.co"
+        const val API_KEY = BuildConfig.API_KEY
+        const val BASE_URL = BuildConfig.BASE_URL
     }
 }
