@@ -1,5 +1,6 @@
 package com.seif.stockmarketapp.data.repository
 
+import com.seif.stockmarketapp.R
 import com.seif.stockmarketapp.data.csv.CSVParser
 import com.seif.stockmarketapp.data.local.LocalDataSource
 import com.seif.stockmarketapp.data.local.entity.CompanyListingEntity
@@ -9,6 +10,7 @@ import com.seif.stockmarketapp.data.remote.RemoteDataSource
 import com.seif.stockmarketapp.domain.model.CompanyListing
 import com.seif.stockmarketapp.domain.repository.StockRepository
 import com.seif.stockmarketapp.util.Resource
+import com.seif.stockmarketapp.util.UiText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -43,11 +45,11 @@ class StockRepositoryImp @Inject constructor(
                 companyListingParser.parse(response.byteStream()) // byteStream: // used to read csv file
             } catch (e: IOException) { //ex: something with thw parsing goes wrong
                 e.printStackTrace()
-                emit(Resource.Error("couldn't load data"))
+                emit(Resource.Error(UiText.StringResource(R.string.io_exception_error_message)))
                 null
             } catch (e: HttpException) { // ex: invalid response
                 e.printStackTrace()
-                emit(Resource.Error("couldn't load data"))
+                emit(Resource.Error(UiText.StringResource(R.string.http_exception_error_message)))
                 null
             }
             remoteListing?.let { listings ->
