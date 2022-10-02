@@ -2,4 +2,5 @@
     <string name="app_name">Stock Market App</string>
     <string name="io_exception_error_message">Could not Load Data IO Exception</string>
     <string name="http_exception_error_message">Could not Load Data HTTP Exception</string>
+    <string name="search_placholder">Search...</string>
 </resources>
