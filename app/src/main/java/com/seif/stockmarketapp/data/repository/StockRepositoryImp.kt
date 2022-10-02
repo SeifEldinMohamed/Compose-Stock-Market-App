@@ -1,5 +1,6 @@
 package com.seif.stockmarketapp.data.repository
 
+import android.util.Log
 import com.seif.stockmarketapp.R
 import com.seif.stockmarketapp.data.csv.CSVParser
 import com.seif.stockmarketapp.data.local.LocalDataSource
@@ -30,9 +31,11 @@ class StockRepositoryImp @Inject constructor(
     ): Flow<Resource<List<CompanyListing>>> { // TODO: use networkBoundResource
         return flow {
             emit(Resource.Loading(true))
+            Log.d("TAG2", "getCompanyListings: Loading...")
             val localListing: List<CompanyListingEntity> =
                 localDataSource.searchCompanyListings(query)
             emit(Resource.Success(data = localListing.map { it.toCompanyListing() }))
+            Log.d("TAG2", "getCompanyListings: Success ${localListing.map { it.toCompanyListing()}}")
 
             val isDbEmpty = localListing.isEmpty() && query.isBlank()
             val shouldLoadFromCache = !isDbEmpty && !fetchFromRemote

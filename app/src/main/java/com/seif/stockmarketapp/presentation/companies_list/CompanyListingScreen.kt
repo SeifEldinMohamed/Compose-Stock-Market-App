@@ -10,6 +10,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -21,16 +22,19 @@ import com.seif.stockmarketapp.R
 import com.seif.stockmarketapp.presentation.companies_list.component.CompanyItem
 import com.seif.stockmarketapp.util.UiText
 
-@Composable
 @Destination(start = true)
+@Composable
 fun CompanyListingScreen(
     navigator: DestinationsNavigator, // comes from decomposed destination library
     viewModel: CompanyListingViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(key1 = Unit){
+        viewModel.getCompanyListing()
+    }
     val swipeRefreshState = rememberSwipeRefreshState(
         isRefreshing = viewModel.state.isRefreshing
     )
-
+    navigator.navigateUp()
     val state = viewModel.state
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -64,7 +68,8 @@ fun CompanyListingScreen(
                             .fillMaxWidth()
                             .clickable {
                                 // ToDo: Navigate to details screen
-                            }.padding(16.dp)
+                            }
+                            .padding(16.dp)
                     )
                 }
             }

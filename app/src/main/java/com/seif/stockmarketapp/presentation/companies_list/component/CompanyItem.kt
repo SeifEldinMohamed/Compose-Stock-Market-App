@@ -6,6 +6,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -19,40 +20,36 @@ fun CompanyItem(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(
-            modifier = modifier.weight(1f),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            modifier = Modifier.weight(1f)
         ) {
             Row(
-                modifier = modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
                     text = company.name,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
-                    color = MaterialTheme.colors.background,
+                    color = MaterialTheme.colors.onBackground,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
-                    modifier = modifier.weight(1f)
+                    modifier = Modifier.weight(1f)
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = company.exchange,
                     fontWeight = FontWeight.Light,
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colors.onBackground
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "(${company.symbol})",
                 fontStyle = FontStyle.Italic,
-                color = MaterialTheme.colors.background
+                color = MaterialTheme.colors.onBackground
             )
         }
     }

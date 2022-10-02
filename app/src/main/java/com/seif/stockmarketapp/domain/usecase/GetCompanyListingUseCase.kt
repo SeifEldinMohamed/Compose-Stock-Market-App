@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetCompanyListingUseCase @Inject constructor(
     private val stockRepository: StockRepository
 ) {
-    suspend operator fun invoke(shouldFetch: Boolean = true, query: String):
+    suspend operator fun invoke(shouldFetch: Boolean = false, query: String):
             Flow<Resource<List<CompanyListing>>> {
         return stockRepository.getCompanyListings(shouldFetch, query)
     }
