@@ -3,4 +3,8 @@
     <string name="io_exception_error_message">Could not Load Data IO Exception</string>
     <string name="http_exception_error_message">Could not Load Data HTTP Exception</string>
     <string name="search_placholder">Search...</string>
+    <string name="intraday_info_io_error">couldn\'t load intraDay info</string>
+    <string name="intraday_info_http_error">couldn\'t load intraDay info</string>
+    <string name="company_info_io_error">couldn\'t load companyInfo info io</string>
+    <string name="company_info_http_error">couldn\'t load company info http</string>
 </resources>

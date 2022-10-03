@@ -11,11 +11,8 @@ import com.seif.stockmarketapp.domain.usecase.GetCompanyListingUseCase
 import com.seif.stockmarketapp.util.Resource
 import com.seif.stockmarketapp.util.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,7 +21,8 @@ class CompanyListingViewModel @Inject constructor(
 ) : ViewModel() {
 
     var state by mutableStateOf(CompanyListingState())
-    private var searchJob: Job? = null // we will keep track of our coroutine job and whenever we typing something new we add a little bit of delay until we actually start the search
+    private var searchJob: Job? =
+        null // we will keep track of our coroutine job and whenever we typing something new we add a little bit of delay until we actually start the search
 
     fun onEvent(event: CompanyListingEvent) {
         when (event) {
@@ -49,6 +47,7 @@ class CompanyListingViewModel @Inject constructor(
         shouldFetchFromRemote: Boolean = false,
         query: String = state.searchQuery.lowercase()
     ) {
+
         viewModelScope.launch(Dispatchers.IO) {
             getCompanyListingUseCase(shouldFetchFromRemote, query)
                 .collect { result ->
