@@ -24,11 +24,7 @@ class CompanyInfoViewModel @Inject constructor(
 
     var state by mutableStateOf(CompanyInfoState())
 
-    init {
-       getCompanyInfo()
-    }
-
-    private fun getCompanyInfo() {
+    fun getCompanyInfo() {
         viewModelScope.launch(Dispatchers.IO) {
             val symbol = savedStateHandle.get<String>("symbol") ?: return@launch
             state = state.copy(isLoading = true)

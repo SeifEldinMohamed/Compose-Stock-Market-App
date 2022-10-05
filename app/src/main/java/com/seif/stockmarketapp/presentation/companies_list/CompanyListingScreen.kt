@@ -20,6 +20,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.seif.stockmarketapp.R
 import com.seif.stockmarketapp.presentation.companies_list.component.CompanyItem
+import com.seif.stockmarketapp.presentation.destinations.CompanyInfoScreenDestination
 import com.seif.stockmarketapp.util.UiText
 
 @Destination(start = true)
@@ -34,7 +35,6 @@ fun CompanyListingScreen(
     val swipeRefreshState = rememberSwipeRefreshState(
         isRefreshing = viewModel.state.isRefreshing
     )
-    navigator.navigateUp()
     val state = viewModel.state
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -67,7 +67,9 @@ fun CompanyListingScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                // ToDo: Navigate to details screen
+                                navigator.navigate(
+                                    CompanyInfoScreenDestination(symbol = state.companies[i].symbol)
+                                )
                             }
                             .padding(16.dp)
                     )
