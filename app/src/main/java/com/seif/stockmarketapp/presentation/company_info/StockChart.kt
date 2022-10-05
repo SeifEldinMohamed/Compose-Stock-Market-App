@@ -5,10 +5,10 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.seif.stockmarketapp.domain.model.IntraDayInfo
 import kotlin.math.round
@@ -68,19 +68,19 @@ fun StockChart(
             }
         }
         // actual graph
-
+        var lastX = 0f
         val strokePath = Path().apply {
             // we need to transform the close values from the csv table to canvas coordinates
             val height = size.height
             for (i in infos.indices) {
-                val info = infos[i]
-                val nextInfo = infos.getOrNull(i + 1) ?: infos.last()
-                val leftRatio = (info.close - lowerValue) / (upperValue - lowerValue)
-                val rightValue = (nextInfo.close - lowerValue) / (upperValue - lowerValue)
+                val info: IntraDayInfo = infos[i]
+                val nextInfo: IntraDayInfo = infos.getOrNull(i + 1) ?: infos.last()
+                val leftRatio: Double = (info.close - lowerValue) / (upperValue - lowerValue)
+                val rightValue: Double = (nextInfo.close - lowerValue) / (upperValue - lowerValue)
 
                 val x1 = spacing + i * spacePerHour
                 val y1 = height - spacing - (leftRatio * height).toFloat()
-                val x2 = spacing + (i+1) * spacePerHour
+                val x2 = spacing + (i + 1) * spacePerHour
                 val y2 = height - spacing - (rightValue * height).toFloat()
 
                 if (i == 0) {
@@ -89,13 +89,38 @@ fun StockChart(
                         y1
                     )
                 }
+                lastX = (x1 + x2) / 2f
                 // drawing line
-                  //  quadraticBezierTo( //
-
-                   // )
-
+                quadraticBezierTo( // these are the mathmatic calculations with make a smooth path
+                    x1, y1, lastX, (y1 + y2) / 2f
+                )
             }
         }
+        val fillPath =
+            android.graphics.Path(strokePath.asAndroidPath()).asComposePath() // to copy  this path
+                .apply {
+                    lineTo(lastX, size.height - spacing) // down line
+                    lineTo(spacing, size.height - spacing) // fromLeftToRight line
+                    close() // connect the current coordinate of the path with the starting point
+                }
+        drawPath(
+            path = fillPath,
+            brush = Brush.verticalGradient(
+                colors = listOf(
+                    transparentGraphColor,
+                    Color.Transparent
+                ),
+                endY = size.height - spacing  // where we want the gradient ot stop
+            )
+        )
+        drawPath(
+            strokePath,
+            color = graphColor,
+            style = Stroke(
+                width = 3.dp.toPx(),
+                cap = StrokeCap.Round
+            )
+        )
     }
 
 }
