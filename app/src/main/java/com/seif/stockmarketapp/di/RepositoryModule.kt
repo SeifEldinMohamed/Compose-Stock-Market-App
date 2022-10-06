@@ -1,7 +1,6 @@
 package com.seif.stockmarketapp.di
 
 import com.seif.stockmarketapp.data.csv.CSVParser
-import com.seif.stockmarketapp.data.csv.IntraDayInfoParser
 import com.seif.stockmarketapp.data.local.LocalDataSource
 import com.seif.stockmarketapp.data.remote.RemoteDataSource
 import com.seif.stockmarketapp.data.repository.StockRepositoryImp
