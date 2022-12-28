@@ -1,7 +1,7 @@
 # Compose-Stock-Market-App
 
 # Description
-Compose Stock Market App built with clean architectural guidelines.
+Compose Stock Market App built with clean architecture.
 
 # Built with:
 • Kotlin<br />
